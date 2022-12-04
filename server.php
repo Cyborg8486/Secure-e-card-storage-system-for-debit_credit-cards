@@ -8,6 +8,7 @@ $errors = array();
 $user_id="";
 
 
+
 // connect to the database
 $db = mysqli_connect('localhost', 'root', '', 'registration');
 $conn=mysqli_connect('localhost', 'root','','test');
@@ -19,10 +20,16 @@ if (isset($_POST['submit'])) {
   $month= mysqli_real_escape_string($conn, $_POST['month']);
   $year= mysqli_real_escape_string($conn, $_POST['year']);
   $cvv= mysqli_real_escape_string($conn, $_POST['cvv']);
-
-  $add_card_query="INSERT INTO registration(ID, cardnumber, cardholder, month, year,cvv) VALUES ('$user_id', '$cardnumber','$cardholder','$month','$year','$cvv')";
+  
+  $add_card_query="INSERT INTO registration(ID, cardnumber, cardholder, month, year,cvv) VALUES (".$_SESSION['id'].", '$cardnumber','$cardholder','$month','$year','$cvv')";
   mysqli_query($conn, $add_card_query);
 
+}
+
+function search_cards()
+{
+  $query = "SELECT * FROM registration WHERE id='".$_SESSION['id'];
+  $results = mysqli_query($GLOBALS["conn"], $query);
 }
 
 // REGISTER USER
@@ -105,8 +112,10 @@ if (isset($_POST['login_user'])) {
         $user_id= $final_id["id"];
         
         if (mysqli_num_rows($results) ==1) {
+          $_SESSION['id']= $user_id;
           $_SESSION['username'] = $username;
-
+           
+          
           header('location: main_page.php');
         }else {
             array_push($errors, "Wrong username/password combination");
