@@ -37,9 +37,23 @@
   	<?php endif ?>
                   <!-- logged in user information -->
     <?php  if (isset($_SESSION['username'])) : ?>
+
+      <?php 
+        
+        ?>
     	<h2 class="text-center">YOUR CARDS</h2>
             <hr>
             <div class="container d-flex flex-wrap align-items-center" id="main_card">
+
+            <div class="m-4 card">
+            <div class="card-body">
+            <h8>Card Number:</h8>
+            <br>
+            <h8>Card Holder Name:</h8>
+            <p class="card-text"></p>
+            <a href="#" class="btn btn-primary">Select Card</a>
+          </div>
+          </div>
                 </div>
                 <div class="text-center">
                     <a href="Add_card.php" class="addcard-btn" role="button">ADD CARD</a>
@@ -49,7 +63,7 @@
                   </div>
     	
     <?php endif ?>
-            <script src="app.js"></script>
+            <!-- <script src="app.js"></script> -->
         </body>
         
     </html>
