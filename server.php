@@ -10,26 +10,30 @@ $user_id="";
 
 
 // connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'registration');
-$conn=mysqli_connect('localhost', 'root','','test');
+$db = mysqli_connect('localhost', 'root', '', 'card_management');
+
 
 if (isset($_POST['submit'])) {
   // receive all input values from the form
-  $cardnumber= mysqli_real_escape_string($conn, $_POST['cardnumber']);
-  $cardholder= mysqli_real_escape_string($conn, $_POST['cardholder']);
-  $month= mysqli_real_escape_string($conn, $_POST['month']);
-  $year= mysqli_real_escape_string($conn, $_POST['year']);
-  $cvv= mysqli_real_escape_string($conn, $_POST['cvv']);
+  $cardnumber= mysqli_real_escape_string($db, $_POST['cardnumber']);
+  $cardholder= mysqli_real_escape_string($db, $_POST['cardholder']);
+  $month= mysqli_real_escape_string($db, $_POST['month']);
+  $year= mysqli_real_escape_string($db, $_POST['year']);
+  $cvv= mysqli_real_escape_string($db, $_POST['cvv']);
   
-  $add_card_query="INSERT INTO registration(ID, cardnumber, cardholder, month, year,cvv) VALUES (".$_SESSION['id'].", '$cardnumber','$cardholder','$month','$year','$cvv')";
-  mysqli_query($conn, $add_card_query);
+  $add_card_query="INSERT INTO cards(ID, cardnumber, cardholder, month, year,cvv) VALUES (".$_SESSION['id'].", '$cardnumber','$cardholder','$month','$year','$cvv')";
+  mysqli_query($db, $add_card_query);
 
+  header('location: main_page.php');
 }
 
 function search_cards()
 {
-  $query = "SELECT cardnumber, cardholder FROM registration WHERE id='".$_SESSION['id'];
-  $results = mysqli_query($GLOBALS["conn"], $query);
+  
+  $query = "SELECT cardnumber, cardholder FROM cards WHERE ID=".$_SESSION['id'];
+  $results = mysqli_query($GLOBALS["db"], $query);
+  
+  return $results;
 }
 
 // REGISTER USER

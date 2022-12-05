@@ -1,5 +1,5 @@
 <?php 
-  session_start(); 
+require_once("server.php");
 
   if (!isset($_SESSION['username'])) {
   	$_SESSION['msg'] = "You must log in first";
@@ -37,33 +37,38 @@
   	<?php endif ?>
                   <!-- logged in user information -->
     <?php  if (isset($_SESSION['username'])) : ?>
-
-      <?php 
-        
-        ?>
+      
     	<h2 class="text-center">YOUR CARDS</h2>
             <hr>
             <div class="container d-flex flex-wrap align-items-center" id="main_card">
 
-            <div class="m-4 card">
-            <div class="card-body">
-            <h8>Card Number:</h8>
-            <br>
-            <h8>Card Holder Name:</h8>
-            <p class="card-text"></p>
-            <a href="#" class="btn btn-primary">Select Card</a>
-          </div>
-          </div>
+            <?php 
+            $cards=search_cards();
+            while ($card = mysqli_fetch_array($cards)){
+              echo '<div class="m-4 card">
+              <div class="card-body">
+              <h8>Card Number:' .$card["cardnumber"].'</h8>
+              <br>
+              <h8>Card Holder Name:' .$card["cardholder"].'</h8>
+              <p class="card-text"></p>
+              <a href="#" class="btn btn-primary">Select Card</a>
+            </div>
+            </div>';
+            }
+
+          
+            ?>
+
                 </div>
                 <div class="text-center">
                     <a href="Add_card.php" class="addcard-btn" role="button">ADD CARD</a>
                   </div>
                   <div class="text-center"><br><br>
-                    <a href="login.php" class="btn btn-danger" role="button">Log Out</a>
+                    <a href="main_page.php?logout=1" class="btn btn-danger" role="button">Log Out</a>
                   </div>
     	
     <?php endif ?>
-            <!-- <script src="app.js"></script> -->
+            
         </body>
         
     </html>
