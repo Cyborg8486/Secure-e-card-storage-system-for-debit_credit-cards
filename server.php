@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 
 function search_cards()
 {
-  $query = "SELECT * FROM registration WHERE id='".$_SESSION['id'];
+  $query = "SELECT cardnumber, cardholder FROM registration WHERE id='".$_SESSION['id'];
   $results = mysqli_query($GLOBALS["conn"], $query);
 }
 
